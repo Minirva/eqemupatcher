@@ -65,7 +65,7 @@ namespace EQEmu_Patcher
 
             serverName = Assembly.GetExecutingAssembly().GetCustomAttribute<ServerName>().Value;
 #if (DEBUG)
-            serverName = "EQEMU Patcher";
+            serverName = "Heros: Rebirth";
 #endif
             if (serverName == "") {
                 MessageBox.Show("This patcher was built incorrectly. Please contact the distributor of this and inform them the server name is not provided or screenshot this message.");
@@ -75,7 +75,7 @@ namespace EQEmu_Patcher
 
             fileName = Assembly.GetExecutingAssembly().GetCustomAttribute<FileName>().Value;
 #if (DEBUG)
-            fileName = "eqemupatcher";
+            fileName = "herosrebirth";
 #endif
             if (fileName == "")
             {
