@@ -86,7 +86,7 @@ namespace EQEmu_Patcher
 
             filelistUrl = Assembly.GetExecutingAssembly().GetCustomAttribute<FileListUrl>().Value;
 #if (DEBUG)
-            filelistUrl = "https://github.com/xackery/eqemupatcher/releases/latest/download";
+            filelistUrl = "http://herosrebirth.com/patch/rof/";
 #endif
             if (filelistUrl == "") {
                 MessageBox.Show("This patcher was built incorrectly. Please contact the distributor of this and inform them the file list url is not provided or screenshot this message.", serverName);
@@ -97,7 +97,7 @@ namespace EQEmu_Patcher
 
             patcherUrl = Assembly.GetExecutingAssembly().GetCustomAttribute<PatcherUrl>().Value;
 #if (DEBUG)
-            patcherUrl = $"https://github.com/xackery/eqemupatcher/releases/latest/download/";
+            patcherUrl = $"http://herosrebirth.com/patch/";
 #endif
             if (patcherUrl == "")
             {

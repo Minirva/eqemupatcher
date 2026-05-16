@@ -166,6 +166,13 @@
     <Error Condition="!Exists('..\packages\LibGit2Sharp.NativeBinaries.1.0.164\build\LibGit2Sharp.NativeBinaries.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LibGit2Sharp.NativeBinaries.1.0.164\build\LibGit2Sharp.NativeBinaries.props'))" />
   </Target>
   <Target Name="BeforeBuild">
+    <PropertyGroup>
+      <SERVER_NAME Condition="'$(SERVER_NAME)'==''">Heros: Rebirth</SERVER_NAME>
+      <FILE_NAME Condition="'$(FILE_NAME)'==''">HerosRebirth</FILE_NAME>
+      <FILELIST_URL Condition="'$(FILELIST_URL)'==''">http://herosrebirth.com/patch/rof/</FILELIST_URL>
+      <PATCHER_URL Condition="'$(PATCHER_URL)'==''">http://herosrebirth.com/patch/</PATCHER_URL>
+      <VERSION Condition="'$(VERSION)'==''">1.0.0.0</VERSION>
+    </PropertyGroup>
     <ItemGroup>
       <AssemblyAttributes Include="EQEmu_Patcher.ServerName">
         <_Parameter1>$(SERVER_NAME)</_Parameter1>
