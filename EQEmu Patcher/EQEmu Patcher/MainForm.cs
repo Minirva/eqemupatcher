@@ -684,11 +684,11 @@ namespace EQEmu_Patcher
             }
         }
 
-        private void lnkAllPatches_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lnkAllPatches_Click(object sender, EventArgs e)
         {
             try
             {
-                System.Diagnostics.Process.Start("https://herosrebirth.com/patches/rof/patchnotes/");
+                System.Diagnostics.Process.Start("https://herosrebirth.com/patches/");
             }
             catch (Exception ex)
             {
