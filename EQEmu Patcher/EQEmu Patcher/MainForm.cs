@@ -109,12 +109,13 @@ namespace EQEmu_Patcher
 
             txtList.Visible = false;
             splashLogo.Visible = true;
-            if (this.Width < 432) {
-                this.Width = 432;
-            }
-            if (this.Height < 550)
+            if (this.Width < 750)
             {
-                this.Height = 550;
+                this.Width = 750;
+            }
+            if (this.Height < 600)
+            {
+                this.Height = 600;
             }
             buildClientVersions();
             IniLibrary.Load();
@@ -197,6 +198,7 @@ namespace EQEmu_Patcher
                 Invoke((MethodInvoker)delegate {
 
                     btnCheck.BackColor = SystemColors.Control;
+                    btnStart.BackColor = SystemColors.Control;
                     if (isPatchGoing)
                     {
                         btnCheck.Text = "Cancel";
@@ -263,8 +265,10 @@ namespace EQEmu_Patcher
                 {
                     btnCheck.BackColor = Color.Red;
                 }
-            } else
+            }
+            else
             {
+                btnStart.BackColor = Color.LimeGreen;
                 if (isAutoPlay) PlayGame();
             }
             isLoading = false;
@@ -592,6 +596,9 @@ namespace EQEmu_Patcher
             StatusLibrary.Log($"Complete! Patched {generateSize(patchedBytes)} in {elapsed} seconds. Press Play to begin.");
             IniLibrary.instance.LastPatchedVersion = filelist.version;
             IniLibrary.Save();
+            Invoke((MethodInvoker)delegate {
+                btnStart.BackColor = Color.LimeGreen;
+            });
             return;
         }
 

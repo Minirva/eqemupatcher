@@ -130,7 +130,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(416, 572);
+            this.ClientSize = new System.Drawing.Size(750, 600);
             this.Controls.Add(this.chkAutoPatch);
             this.Controls.Add(this.chkAutoPlay);
             this.Controls.Add(this.txtList);
@@ -140,7 +140,7 @@
             this.Controls.Add(this.progressBar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(305, 371);
+            this.MinimumSize = new System.Drawing.Size(750, 600);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EQEmu Patcher";
