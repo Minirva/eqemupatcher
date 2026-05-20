@@ -259,7 +259,7 @@ namespace EQEmu_Patcher
                 filelist = deserializer.Deserialize<FileList>(input);
             }
 
-            _ = LoadPatchNotes(filelist.version);
+            _ = LoadPatchNotes(filelist.displayVersion ?? "unknown");
 
             if (filelist.version != IniLibrary.instance.LastPatchedVersion)
             {
@@ -688,7 +688,7 @@ namespace EQEmu_Patcher
         {
             try
             {
-                System.Diagnostics.Process.Start("https://herosrebirth.com/patches/");
+                System.Diagnostics.Process.Start("http://herosrebirth.com/changelog/");
             }
             catch (Exception ex)
             {
@@ -733,6 +733,7 @@ namespace EQEmu_Patcher
     public class FileList
     {
         public string version { get; set; }
+        public string displayVersion { get; set; }
 
         public List<FileEntry> deletes { get; set; }
         public string downloadprefix { get; set; }
