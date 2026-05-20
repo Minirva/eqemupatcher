@@ -38,6 +38,9 @@
             this.chkAutoPlay = new System.Windows.Forms.CheckBox();
             this.chkAutoPatch = new System.Windows.Forms.CheckBox();
             this.pendingPatchTimer = new System.Windows.Forms.Timer(this.components);
+            this.txtPatchNotes = new System.Windows.Forms.RichTextBox();
+            this.lnkAllPatches = new System.Windows.Forms.LinkLabel();
+            this.btnDiscord = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splashLogo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -126,11 +129,52 @@
             // 
             this.pendingPatchTimer.Tick += new System.EventHandler(this.pendingPatchTimer_Tick);
             // 
-            // MainForm
+            // txtPatchNotes
             // 
+            this.txtPatchNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPatchNotes.Location = new System.Drawing.Point(430, 10);
+            this.txtPatchNotes.Name = "txtPatchNotes";
+            this.txtPatchNotes.ReadOnly = true;
+            this.txtPatchNotes.Size = new System.Drawing.Size(305, 450);
+            this.txtPatchNotes.TabIndex = 9;
+            this.txtPatchNotes.Text = "Loading patch notes...";
+            // 
+            // lnkAllPatches
+            // 
+            this.lnkAllPatches.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkAllPatches.AutoSize = true;
+            this.lnkAllPatches.Location = new System.Drawing.Point(430, 470);
+            this.lnkAllPatches.Name = "lnkAllPatches";
+            this.lnkAllPatches.Size = new System.Drawing.Size(120, 13);
+            this.lnkAllPatches.TabIndex = 10;
+            this.lnkAllPatches.TabStop = true;
+            this.lnkAllPatches.Text = "View All Patch Notes";
+            this.lnkAllPatches.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkAllPatches_LinkClicked);
+            // 
+            // btnDiscord
+            // 
+            this.btnDiscord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDiscord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(101)))), ((int)(((byte)(242)))));
+            this.btnDiscord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDiscord.ForeColor = System.Drawing.Color.White;
+            this.btnDiscord.Location = new System.Drawing.Point(630, 510);
+            this.btnDiscord.Name = "btnDiscord";
+            this.btnDiscord.Size = new System.Drawing.Size(105, 35);
+            this.btnDiscord.TabIndex = 11;
+            this.btnDiscord.Text = "Join Discord";
+            this.btnDiscord.UseVisualStyleBackColor = false;
+            this.btnDiscord.Click += new System.EventHandler(this.btnDiscord_Click);
+            // 
+            // MainForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 600);
+            this.Controls.Add(this.btnDiscord);
+            this.Controls.Add(this.lnkAllPatches);
+            this.Controls.Add(this.txtPatchNotes);
             this.Controls.Add(this.chkAutoPatch);
             this.Controls.Add(this.chkAutoPlay);
             this.Controls.Add(this.txtList);
@@ -162,6 +206,9 @@
         private System.Windows.Forms.CheckBox chkAutoPlay;
         private System.Windows.Forms.CheckBox chkAutoPatch;
         private System.Windows.Forms.Timer pendingPatchTimer;
+        private System.Windows.Forms.RichTextBox txtPatchNotes;
+        private System.Windows.Forms.LinkLabel lnkAllPatches;
+        private System.Windows.Forms.Button btnDiscord;
     }
 }
 

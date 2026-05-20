@@ -259,6 +259,8 @@ namespace EQEmu_Patcher
                 filelist = deserializer.Deserialize<FileList>(input);
             }
 
+            _ = LoadPatchNotes(filelist.version);
+
             if (filelist.version != IniLibrary.instance.LastPatchedVersion)
             {
                 if (!isPendingPatch)
@@ -668,6 +670,63 @@ namespace EQEmu_Patcher
             pendingPatchTimer.Enabled = false;
             isPendingPatch = false;
             btnCheck_Click(sender, e);
+        }
+
+        private void btnDiscord_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("https://discord.gg/aScespeGpn");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not open Discord link: " + ex.Message);
+            }
+        }
+
+        private void lnkAllPatches_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("https://herosrebirth.com/patches/rof/patchnotes/");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not open patch notes page: " + ex.Message);
+            }
+        }
+
+        private async Task LoadPatchNotes(string version)
+        {
+            try
+            {
+                string url = $"{filelistUrl}patchnotes/patchnotes_{version}.rtf";
+                var data = await Download(new CancellationTokenSource(), url);
+                if (data == null || data.Length == 0)
+                {
+                    Invoke((MethodInvoker)delegate {
+                        txtPatchNotes.Text = "No patch notes available for this version.";
+                    });
+                    return;
+                }
+                string rtf = System.Text.Encoding.Default.GetString(data);
+                Invoke((MethodInvoker)delegate {
+                    try
+                    {
+                        txtPatchNotes.Rtf = rtf;
+                    }
+                    catch
+                    {
+                        txtPatchNotes.Text = rtf;
+                    }
+                });
+            }
+            catch
+            {
+                Invoke((MethodInvoker)delegate {
+                    txtPatchNotes.Text = "No patch notes available for this version.";
+                });
+            }
         }
     }
 
