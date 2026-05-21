@@ -252,14 +252,23 @@ namespace EQEmu_Patcher
 
             using (var input = File.OpenText($"{System.IO.Path.GetDirectoryName(Application.ExecutablePath)}\\filelist.yml"))
             {
-                var deserializerBuilder = new DeserializerBuilder().WithNamingConvention(new CamelCaseNamingConvention());
+                var deserializerBuilder = new DeserializerBuilder()
+                    .WithNamingConvention(new CamelCaseNamingConvention())
+                    .IgnoreUnmatchedProperties();
 
                 var deserializer = deserializerBuilder.Build();
 
                 filelist = deserializer.Deserialize<FileList>(input);
             }
 
-            _ = LoadPatchNotes(filelist.displayVersion ?? "unknown");
+            if (filelist.version == IniLibrary.instance.LastPatchedVersion)
+            {
+                txtPatchNotes.Text = "Client is up to date.";
+            }
+            else
+            {
+                _ = LoadPatchNotes(filelist.displayVersion ?? "unknown");
+            }
 
             if (filelist.version != IniLibrary.instance.LastPatchedVersion)
             {
@@ -600,6 +609,7 @@ namespace EQEmu_Patcher
             IniLibrary.Save();
             Invoke((MethodInvoker)delegate {
                 btnStart.BackColor = Color.LimeGreen;
+                txtPatchNotes.Text = "Client is up to date.";
             });
             return;
         }
