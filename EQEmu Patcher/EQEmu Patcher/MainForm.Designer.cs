@@ -41,6 +41,7 @@
             this.txtPatchNotes = new System.Windows.Forms.RichTextBox();
             this.lnkAllPatches = new System.Windows.Forms.Button();
             this.btnDiscord = new System.Windows.Forms.Button();
+            this.lblServerStatus = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splashLogo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -166,11 +167,24 @@
             this.btnDiscord.UseVisualStyleBackColor = false;
             this.btnDiscord.Click += new System.EventHandler(this.btnDiscord_Click);
             // 
+            // lblServerStatus
+            // 
+            this.lblServerStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblServerStatus.AutoSize = true;
+            this.lblServerStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.lblServerStatus.Location = new System.Drawing.Point(160, 487);
+            this.lblServerStatus.Name = "lblServerStatus";
+            this.lblServerStatus.Size = new System.Drawing.Size(105, 15);
+            this.lblServerStatus.TabIndex = 12;
+            this.lblServerStatus.Text = "Server: Checking...";
+            this.lblServerStatus.ForeColor = System.Drawing.Color.Gray;
+            // 
             // MainForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 600);
+            this.Controls.Add(this.lblServerStatus);
             this.Controls.Add(this.btnDiscord);
             this.Controls.Add(this.lnkAllPatches);
             this.Controls.Add(this.txtPatchNotes);
@@ -208,6 +222,7 @@
         private System.Windows.Forms.RichTextBox txtPatchNotes;
         private System.Windows.Forms.Button lnkAllPatches;
         private System.Windows.Forms.Button btnDiscord;
+        private System.Windows.Forms.Label lblServerStatus;
     }
 }
 

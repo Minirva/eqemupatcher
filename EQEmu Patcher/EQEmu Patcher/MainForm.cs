@@ -261,13 +261,24 @@ namespace EQEmu_Patcher
                 filelist = deserializer.Deserialize<FileList>(input);
             }
 
-            if (filelist.version == IniLibrary.instance.LastPatchedVersion)
+            _ = CheckServerStatus();
+            string currentDisplay = filelist.displayVersion ?? "unknown";
+            if (IniLibrary.instance.LastSeenDisplayVersion == currentDisplay)
             {
                 txtPatchNotes.Text = "Client is up to date.";
             }
             else
             {
-                _ = LoadPatchNotes(filelist.displayVersion ?? "unknown");
+                _ = LoadPatchNotes(currentDisplay);
+                var seenTimer = new System.Windows.Forms.Timer();
+                seenTimer.Interval = 5000;
+                seenTimer.Tick += (s, args) => {
+                    seenTimer.Stop();
+                    seenTimer.Dispose();
+                    IniLibrary.instance.LastSeenDisplayVersion = currentDisplay;
+                    IniLibrary.Save();
+                };
+                seenTimer.Start();
             }
 
             if (filelist.version != IniLibrary.instance.LastPatchedVersion)
@@ -528,7 +539,7 @@ namespace EQEmu_Patcher
 
                 StatusLibrary.SetProgress((int)(currentBytes / totalBytes * 10000));
 
-                var path = Path.GetDirectoryName(Application.ExecutablePath)+"\\"+entry.name.Replace("/", "\\");
+                var path = Path.GetDirectoryName(Application.ExecutablePath) + "\\" + entry.name.Replace("/", "\\");
                 if (!UtilityLibrary.IsPathChild(path))
                 {
                     StatusLibrary.Log("Path " + path + " might be outside of your Everquest directory. Skipping download to this location.");
@@ -536,7 +547,8 @@ namespace EQEmu_Patcher
                 }
 
                 // check if file exists and is already patched
-                if (File.Exists(path)) {
+                if (File.Exists(path))
+                {
                     var md5 = UtilityLibrary.GetMD5(path);
                     if (md5.ToUpper() == entry.md5.ToUpper())
                     {
@@ -606,6 +618,7 @@ namespace EQEmu_Patcher
             string elapsed = start.Elapsed.ToString("ss\\.ff");
             StatusLibrary.Log($"Complete! Patched {generateSize(patchedBytes)} in {elapsed} seconds. Press Play to begin.");
             IniLibrary.instance.LastPatchedVersion = filelist.version;
+            IniLibrary.instance.LastSeenDisplayVersion = filelist.displayVersion ?? "unknown";
             IniLibrary.Save();
             Invoke((MethodInvoker)delegate {
                 btnStart.BackColor = Color.LimeGreen;
@@ -706,11 +719,46 @@ namespace EQEmu_Patcher
             }
         }
 
+        private async Task CheckServerStatus()
+        {
+            string host = "herosrebirth.com";
+            int port = 9000;
+            bool isOnline = false;
+
+            try
+            {
+                using (var client = new System.Net.Sockets.TcpClient())
+                {
+                    var connectTask = client.ConnectAsync(host, port);
+                    var timeoutTask = Task.Delay(3000);
+                    var completed = await Task.WhenAny(connectTask, timeoutTask);
+                    isOnline = (completed == connectTask) && client.Connected;
+                }
+            }
+            catch
+            {
+                isOnline = false;
+            }
+
+            Invoke((MethodInvoker)delegate {
+                if (isOnline)
+                {
+                    lblServerStatus.Text = "Server: Online";
+                    lblServerStatus.ForeColor = System.Drawing.Color.Green;
+                }
+                else
+                {
+                    lblServerStatus.Text = "Server: Offline";
+                    lblServerStatus.ForeColor = System.Drawing.Color.Red;
+                }
+            });
+        }
+
         private async Task LoadPatchNotes(string version)
         {
             try
             {
-                string url = $"{filelistUrl}patchnotes/patchnotes_{version}.rtf";
+                string url = $"http://herosrebirth.com/patchnotes/patchnotes_{version}.rtf";
                 var data = await Download(new CancellationTokenSource(), url);
                 if (data == null || data.Length == 0)
                 {

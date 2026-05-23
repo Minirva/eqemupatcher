@@ -17,6 +17,7 @@ namespace EQEmu_Patcher
         public string AutoPlay { get; set; }
         public VersionTypes ClientVersion { get; set; }
         public string LastPatchedVersion { get; set; }
+        public string LastSeenDisplayVersion { get; set; }
 
 
         public static void Save()
